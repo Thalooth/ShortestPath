@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Optimal Route Analyser</title>
+</head>
+<body>
+	<h1>Find the optimum route for your travels</h1>
+	<p>Enter your desired cities/places:</p>
+	<form action="/ShortestDistance/dist.php" method="post" onsubmit="check()" >
+	<pre>
+		Start*     :<input type="text" name="a[]" required>
+		Place2*    :<input type="text" name="a[]" required>
+		Place3*    :<input type="text" name="a[]" required>
+		Place4     :<input type="text" name="a[]">
+		Place5     :<input type="text" name="a[]">
+		Place6     :<input type="text" name="a[]">
+		Place7     :<input type="text" name="a[]">
+		Place8     :<input type="text" name="a[]">
+		Place9     :<input type="text" name="a[]">
+		Place10    :<input type="text" name="a[]">
+		Place11    :<input type="text" name="a[]">
+		Place12    :<input type="text" name="a[]">
+		Click here to enter the distances: <a href="#" id="filldetails" onclick="addFields()">Fill Details</a>
+		<div id="container"/>
+	</pre>
+	</form>
+	<p id="d1"></p>
+<script>
+	function addFields(){
+            count = 0;
+			elementList = document.querySelectorAll('input');
+			for(var i=0;i<12;i++){
+				if(elementList[i].value != ""){
+					count++;
+				}
+			}
+            var container = document.getElementById("container");
+            while (container.hasChildNodes()) {
+                container.removeChild(container.lastChild);
+            }
+            if(count==0){
+            	alert("Please fill the form!");
+            	return;
+            }
+            for(var i=0;i<3;i++){
+            		if(elementList[i].value==""){
+            			alert("Please check the required fields");
+            			return;
+            		}
+            }
+            container.appendChild(document.createTextNode("Leave the space empty if there is no path between them:\n"));
+            for (i=0;i<count;i++){
+            	for(j=0;j<count;j++){
+                	container.appendChild(document.createTextNode(elementList[i].value+" to "+elementList[j].value));
+                	var input = document.createElement("input");
+                	input.type = "number";
+                	input.name = "d" + i+"[]";
+                	container.appendChild(input);
+                	container.appendChild(document.createElement("br"));
+                		if(i==j){
+                			input.value=0;
+                			input.readOnly=true;
+                		}
+            		}
+            		container.appendChild(document.createElement("br"));
+        		}
+        		container.appendChild(document.createTextNode("\n"));
+        		var input = document.createElement("input");
+               		input.type = "submit";
+                	input.value = "submit";
+                	container.appendChild(input);
+			}
+			function check(){
+				var values = [];
+				for (i=0;i<count;i++){
+					var fields = document.getElementsByName("d"+i+"[]");
+					for(var j = 0; j < fields.length; j++) {
+    					if(i!=j && fields[j].value==0)
+    						fields[j].value=-1;
+    				}
+				}
+			}
+</script>
+</body>
+</html>
