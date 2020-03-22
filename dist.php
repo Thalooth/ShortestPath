@@ -6,6 +6,8 @@
     if($val!="")
       $final=$final+1;
   } 
+  if($final>8)
+    echo "Please wait patiently while we calculate the most optimal route for you...<br>";
   $graph=array(array(0));
   for($i=0;$i<$final;$i++){
     $d=$_POST["d".$i];
@@ -25,6 +27,7 @@ $distance=0;
 $min=1000000;
 $i = $count;
 $check=0;
+$p=0;
 for($m=1;$m<=$total;$m++){
   $flag=true;
   if($graph[0][$path[0]]<=0){
@@ -36,14 +39,11 @@ for($m=1;$m<=$total;$m++){
   }
   if($flag==true){
     if($graph[$path[$count]][0]>0){
-      echo $names[0]." - ".$names[$path[0]]." - ";
       $distance=$distance+$graph[0][$path[0]];
       for($j=1;$j<$final-1;$j++){
           $distance=$distance+$graph[$path[$j-1]][$path[$j]];
-          echo $names[$path[$j]]." - ";
       }
-        $distance=$distance+$graph[$path[$count-1]][$path[$count]];
-        echo $names[0]." : Distance = ".$distance."<br>";
+        $distance=$distance+$graph[$path[$count]][0];
         $check=$check+1;
         if($min>$distance){
           $minpath=$path;
@@ -51,15 +51,25 @@ for($m=1;$m<=$total;$m++){
         }
       }
     }
-    $distance=0;
   $i = $count;
   while ($i > 0 and $path[$i - 1] >= $path[$i])
       $i=$i-1;
+  if($min<=$distance){
+    if($path[$i]==$p)
+      $i=$i-1;
+  }
+  $distance=0;
   if ($i <= 0) 
       break;
+  $p=$path[$i];
   $j = $count;
-  while ($path[$j] <= $path[$i - 1]) 
+  while ($path[$j] <= $path[$i - 1]) {
     $j=$j-1;
+    if($j==0)
+      break;
+  }
+  if($j==0)
+      break;
   $temp = $path[$i - 1];
   $path[$i - 1] = $path[$j];
   $path[$j] = $temp;
@@ -77,7 +87,7 @@ if($check==0){
 	exit();
 }
 else{
-	echo $check." routes found.<br><br>Minimum Distance Route:<br> ".$names[0]." - ";
+	echo "<br><br>Minimum Distance Route:<br> ".$names[0]." - ";
 	for($j=0;$j<$final-1;$j++)
     echo $names[$minpath[$j]]." - ";
 	echo $names[0]." : Distance = ".$min."<br>";
