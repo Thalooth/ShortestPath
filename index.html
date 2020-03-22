@@ -20,15 +20,6 @@
 		Place10    :<input type="text" name="a[]">
 		Place11    :<input type="text" name="a[]">
 		Place12    :<input type="text" name="a[]">
-		Place13    :<input type="text" name="a[]">
-		Place14    :<input type="text" name="a[]">
-		Place15    :<input type="text" name="a[]">
-		Place16    :<input type="text" name="a[]">
-		Place17    :<input type="text" name="a[]">
-		Place18    :<input type="text" name="a[]">
-		Place19    :<input type="text" name="a[]">
-		Place20    :<input type="text" name="a[]">
-		Place21    :<input type="text" name="a[]">
 		Click here to enter the distances: <a href="#" id="filldetails" onclick="addFields()">Fill Details</a>
 		<div id="container"/>
 	</pre>
@@ -38,7 +29,7 @@
 	function addFields(){
             count = 0;
 			elementList = document.querySelectorAll('input');
-			for(var i=0;i<21;i++){
+			for(var i=0;i<12;i++){
 				if(elementList[i].value != ""){
 					count++;
 				}
@@ -63,7 +54,6 @@
                 	container.appendChild(document.createTextNode(elementList[i].value+" to "+elementList[j].value));
                 	var input = document.createElement("input");
                 	input.type = "number";
-                	input.value=1;
                 	input.name = "d" + i+"[]";
                 	container.appendChild(input);
                 	container.appendChild(document.createElement("br"));
